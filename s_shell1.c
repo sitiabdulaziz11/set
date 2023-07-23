@@ -1,5 +1,4 @@
-#include "shell.h"
-#include <unistd.h>
+#inculde "shell.h"
 
 
 int shell_main(info_s *info, char **av)

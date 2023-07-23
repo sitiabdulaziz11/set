@@ -136,8 +136,12 @@ void free_info(info_s *info, int all)
     
 	if (all)
 	{
+		if (info->env)
+			free_list(&(info->env));
+		free_vector(info->environ);
+		info->environ = NULL;
 		if (info->fd_read > 2)
-		close(info->fd_read);
+			close(info->fd_read);
 		_putchar(NEG_ONE);
 	}
     

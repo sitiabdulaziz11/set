@@ -142,6 +142,7 @@ void clear_info(info_s *);
 void set_info(info_s *, char **);
 void free_info(info_s *, int);
 void free_vector(char **);
+void free_list(list_s **head_ptr);
 void print_error(info_s *, char *);
 int handle_builtin(info_s *);
 bool is_executable(info_s *, char *);
@@ -156,4 +157,6 @@ ssize_t input_buf(info_s *info, char **buf, size_t *len);
 char **strtow(char *str, char *d);
 char **list_to_vector(list_s *head);
 int handle_exit(info_s *);
+
+
 #endif

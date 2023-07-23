@@ -102,4 +102,44 @@ size_t print_list_str(const list_s *h)
 	}
 	return (i);
 }
+/**
+ * free_vector - frees memory allocated to a 2D character array
+ * @vec: Vector to be freed.
+ *
+ * Return: Nothing.
+ */
+
+void free_vector(char **vec)
+{
+	char **ptr = vec;
+
+	if (!vec)
+		return;
+	while (*vec)
+		free(*vec++);
+
+	free(ptr);
+}/**
+ * free_list - frees all nodes of a list
+ * @head_ptr: address of pointer to head node
+ *
+ * Return: void
+ */
+void free_list(list_s **head_ptr)
+{
+	list_s *node, *next_node, *head;
+
+	if (!head_ptr || !*head_ptr)
+		return;
+	head = *head_ptr;
+	node = head;
+	while (node)
+	{
+		next_node = node->next;
+		free(node->str);
+		free(node);
+		node = next_node;
+	}
+	*head_ptr = NULL;
+}
 
