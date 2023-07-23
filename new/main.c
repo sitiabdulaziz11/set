@@ -1,0 +1,44 @@
+#include "shell.h"
+/**
+ * main - Entry point to shell program
+ * @argc: Number of arguments passed into the shell executable.
+ * @argv: Vector containing arguments passed.
+ *
+ * Return: 0 on success or 1 on failure.
+ */
+int main(int argc, char **argv)
+{
+	info_s info[] = {SET_INFO};
+	int fd = 2;
+
+	fd += 3;
+	
+	if (argc == 2)
+	{
+		fd = open(argv[1], O_RDONLY);
+		if (fd == -1)
+		{
+			if (errno == EACCES)
+				exit(126);
+
+			if (errno == ENOENT)
+			{
+				puts_err(argv[0]);
+				puts_err(": 0: Can't open ");
+				puts_err(argv[1]);
+				putchar_err('\n');
+				putchar_err(NEG_ONE);
+				exit(127);
+			}
+
+			return (EXIT_FAILURE);
+		}
+
+		info->fd_read = fd;
+	}
+
+	shell_main(info, argv);
+	gather_env(info);
+
+	return (EXIT_SUCCESS);
+}
