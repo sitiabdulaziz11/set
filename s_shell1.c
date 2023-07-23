@@ -1,6 +1,4 @@
 #include "shell.h"
-#include <unistd.h>
-
 
 int shell_main(info_s *info, char **av)
 {
@@ -52,7 +50,9 @@ int handle_builtin(info_s *info)
 {
 	int i, builtin_return_value = -1;
 
-	builtin_commands builtints[] = {{"env", _printenv}, {"exit", handle_exit}};
+	builtin_commands builtints[] = {{"env", _printenv},
+	 {"exit", handle_exit},
+	 {NULL, NULL}};
 	
 	for(i = 0; builtints[i].type; i++)
 		if (_strcmp(info->argv[0], builtints[i].type) == 0)
@@ -109,8 +109,6 @@ void check_command(info_s *info)
 void create_process(info_s *info)
 {
 	pid_t cpid;
-	char *const *argv;
-	char *const *envp;
 
 	/* Fork a new process */
 	cpid = fork();
@@ -125,10 +123,7 @@ void create_process(info_s *info)
 	if (cpid == 0)
 	{
 		/* Execute the command */
-		char *const *argv = (char *const *)info->argv; /*Typecast info->argv to char *const * */
-		char *const *envp = (char *const *)get_environ(info); /*Typecast the return value of get_environ to char *const **/
-		
-		if (execve(info->path, argv, envp) == -1)
+		if (execve(info->path, info->argv, get_environ(info)) == -1)
 		{
 			/* Handle execve errors */
 			free_info(info, 1);

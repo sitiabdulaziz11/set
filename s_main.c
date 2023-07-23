@@ -10,8 +10,8 @@ int main(int argc, char **argv)
 {
 	info_s info[] = {SET_INFO};
 	int fd = 2;
-
-
+	fd += 3;
+	
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);

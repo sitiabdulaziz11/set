@@ -1,34 +1,6 @@
 #include "shell.h"
 
 /**
- * get_environ - Returns a copy of the environment variables as an array of strings.
- * @info: Structure containing the environment variables.
- *		  Used to maintain constant function prototype.
- * Return: The environment variables as an array of strings.
- */
-
-char **get_environ(info_s *info)
-{
-	/* If the environment variables have not been set or have been changed, update them. */
-	if (!info->envirom || info->env_changed)
-	{
-		info->envirom = list_to_vector(info->env);
-		info->env_changed = 0;
-	}
-	return (info->envirom);
-}
-/**
- * _printenv - prints the current environment
- * @info: contains simulated arguments for a function pointer,
- * allowing for a consistent function prototype
- * Return: Always 0
- */
-int _printenv(info_s *info)
-{
-	print_list_str(info->env);
-	return (0);
-}
-/**
  * handle_exit - exits the shell
  * @info: contains simulated arguments for a function pointer,
  * allowing for a consistent function prototype
@@ -86,66 +58,6 @@ int err_num(char *s)
 	return (result);
 }
 
-/**
- * clear_info - initializes info_s struct
- * @info: struct address
- */
-void clear_info(info_s *info)
-{
-	info->arg = NULL;
-	info->argv = NULL;
-	info->path = NULL;
-	info->argc = 0;
-}/**
- * set_info - initializes info_s struct
- * @info: struct address
- * @av: argument vector
- */
-void set_info(info_s *info, char **av)
-{
-	int i = 0;
-
-	info->prog_name = av[0];
-	if (info->arg)
-	{
-		info->argv = strtow(info->arg, " \t");
-		if (!info->argv)
-		{
-			info->argv = malloc(sizeof(char *) * 2);
-			if (info->argv)
-			{
-				info->argv[0] = _strdup(info->arg);
-				info->argv[1] = NULL;
-			}
-		}
-		for (i = 0; info->argv && info->argv[i]; i++)
-			;
-		info->argc = i;
-    }
-}
-    /**
- * free_info - frees info_s struct fields
- * @info: struct address
- * @all: true if freeing all fields
- */
-void free_info(info_s *info, int all)
-{
-	free_vector(info->argv);
-	info->argv = NULL;
-	info->path = NULL;
-    
-	if (all)
-	{
-		if (info->env)
-			free_list(&(info->env));
-		free_vector(info->environ);
-		info->environ = NULL;
-		if (info->fd_read > 2)
-			close(info->fd_read);
-		_putchar(NEG_ONE);
-	}
-    
-}
 /**
  * from_terminal - returns true if shell is interactive mode
  * @info: struct address

@@ -35,9 +35,21 @@
 #define SET_INFO\
 	{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0, \
 	}
+
 extern char **environ;
 
- 
+/**
+ * struct ListNode - singly linked list
+ * @num: the number field
+ * @str: a string
+ * @next: points to the next node
+ */
+typedef struct ListNode
+{
+	int num;
+	char *str;
+	struct ListNode *next;
+} list_s;
 
 /**
  * struct InfoNode - contains simulated arguments for a function pointer,
@@ -61,22 +73,6 @@ extern char **environ;
  * @fd_read: the file descriptor used for reading line input
  * @hist_lines: the number of lines in the history
  */
-extern char **environ;
-
-/**
- * struct ListNode - singly linked list
- * @num: the number field
- * @str: a string
- * @next: points to the next node
- */
-typedef struct ListNode
-{
-	int num;
-	char *str;
-	struct ListNode *next;
-} list_s;
-
-
 typedef struct InfoNode
 {
 	char *arg;
