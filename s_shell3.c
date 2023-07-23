@@ -208,45 +208,32 @@ int print_dec(int input, int fd)
  * Return: Array of strings.
  */
 
-char **list_to_vector(list_s *head) 
+char **list_to_vector(list_s *head)
 {
-    list_s *node = head;
-    size_t size = 0;
-    char **env_vector = NULL;
+	list_s *node = head;
+	size_t i = _listlen(head), j;
+	char **strs;
+	char *str;
 
-    /* Calculate the number of elements in the linked list*/
-    while (node != NULL) {
-        size++;
-        node = node->next;
-    }
+	if (!head || !i)
+		return (NULL);
+	strs = malloc(sizeof(char *) * (i + 1));
 
-    /*Allocate memory for the array of strings (environment variables)*/
-    env_vector = (char **)malloc((size + 1) * sizeof(char *));
-    if (!env_vector) {
-        perror("Memory allocation failed");
-        exit(EXIT_FAILURE);
-    }
-
-    /* Copy the environment variables from the linked list to the array*/
-    node = head;
-    size_t i = 0;
-    while (node != NULL) {
-        env_vector[i] = _strdup(node->str);
-        if (!env_vector[i]) {
-            /* Memory allocation failed, free the previous allocations*/
-            for (size_t j = 0; j < i; j++) {
-                free(env_vector[j]);
-            }
-            free(env_vector);
-            perror("Memory allocation failed");
-            exit(EXIT_FAILURE);
-        }
-        node = node->next;
-        i++;
-    }
-
-    env_vector[size] = NULL; /* Null-terminate the array*/
-
-    return env_vector;
+	if (!strs)
+		return (NULL);
+	for (i = 0; node; node = node->next, i++)
+	{
+		str = malloc(_strlen(node->str) + 1);
+		if (!str)
+		{
+			for (j = 0; j < i; j++)
+				free(strs[j]);
+			free(strs);
+			return (NULL);
+		}
+		str = _strcpy(str, node->str);
+		strs[i] = str;
+	}
+	strs[i] = NULL;
+	return (strs);
 }
-
