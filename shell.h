@@ -153,6 +153,8 @@ ssize_t input_buf(info_s *info, char **buf, size_t *len);
 char **strtow(char *str, char *d);
 char **list_to_vector(list_s *head);
 int handle_exit(info_s *);
-
-
+int _getline(info_s *info, char **ptr, size_t *length);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+ssize_t read_buf(info_s *info, char *buf, size_t *i);
 #endif
+

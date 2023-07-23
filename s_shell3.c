@@ -236,4 +236,21 @@ char **list_to_vector(list_s *head)
 	}
 	strs[i] = NULL;
 	return (strs);
+}/**
+ * _listlen - gets the length of linked list
+ * @h: Pointer to first node.
+ *
+ * Return: Size of list.
+ */
+
+size_t _listlen(const list_s *h)
+{
+	size_t i = 0;
+
+	while (h)
+	{
+		h = h->next;
+		i++;
+	}
+	return (i);
 }
